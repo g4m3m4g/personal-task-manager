@@ -1,0 +1,56 @@
+<form action="">
+  <p-card header="" [style]="{ width: '360px' }">
+    <div class="field" [formGroup]="signupForm">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="username"
+        class="w-full"
+        name="username"
+      />
+    </div>
+    <div class="field" [formGroup]="signupForm">
+      <label for="password">Password</label>
+      <p-password
+        formControlName="password"
+        class="w-full"
+        [feedback]="false"
+      />
+    </div>
+    <div class="field" [formGroup]="signupForm">
+      <label for="confirmPassword">Confirm Password</label>
+      <p-password
+        formControlName="confirmPassword"
+        class="w-full"
+        [feedback]="false"
+      />
+    </div>
+    <div class="field" [formGroup]="signupForm">
+      <label for="nickname">Nickname</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="username"
+        class="w-full"
+        name="nickname"
+      />
+    </div>
+    <div>
+      <p-button
+        type="submit"
+        label="Register"
+        styleClass="w-full"
+        severity="contrast"
+        class="w-full"
+        [disabled]="signupForm.invalid"
+      />
+    </div>
+    <div class="mt-2">
+      <span style="font-size: small"
+        >Already have an acount?
+        <a [routerLink]="'/login'" style="color: forestgreen">Login</a></span
+      >
+    </div>
+  </p-card>
+</form>
