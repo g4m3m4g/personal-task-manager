@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { PasswordModule } from 'primeng/password';
 import { RouterModule } from '@angular/router';
+import { passwordMatchValidator } from '../../../shared/password-match.directive';
 
 @Component({
   selector: 'app-signup',
@@ -33,10 +34,12 @@ export class SignupComponent {
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required]),
-    nickname: new FormControl('', [
+    nickName: new FormControl('', [
       Validators.required,
       Validators.pattern(/^[A-Za-z]+$/),
     ]),
+  },{
+    validators: passwordMatchValidator
   });
 
   get username() {
@@ -47,11 +50,13 @@ export class SignupComponent {
     return this.signupForm.controls['password'];
   }
 
+  
   get confirmPassword() {
     return this.signupForm.controls['confirmPassword'];
   }
 
   get nickname() {
-    return this.signupForm.controls['nickname'];
+    return this.signupForm.controls['nickName'];
   }
+  
 }

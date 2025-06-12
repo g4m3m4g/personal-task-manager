@@ -25,13 +25,16 @@
         class="w-full"
         [feedback]="false"
       />
+      @if (signupForm.errors?.['passwordMismatch'] && signupForm.touched) {
+      <small style="color: brown">Passwords do not match</small>
+      }
     </div>
     <div class="field" [formGroup]="signupForm">
       <label for="nickname">Nickname</label>
       <input
         type="text"
         pInputText
-        formControlName="username"
+        formControlName="nickName"
         class="w-full"
         name="nickname"
       />
@@ -40,9 +43,8 @@
       <p-button
         type="submit"
         label="Register"
-        styleClass="w-full"
         severity="contrast"
-        class="w-full"
+        styleClass="w-full"
         [disabled]="signupForm.invalid"
       />
     </div>
