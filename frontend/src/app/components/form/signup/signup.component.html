@@ -34,7 +34,7 @@
       <input
         type="text"
         pInputText
-        formControlName="nickName"
+        formControlName="nickname"
         class="w-full"
         name="nickname"
       />
@@ -46,6 +46,7 @@
         severity="contrast"
         styleClass="w-full"
         [disabled]="signupForm.invalid"
+        (onClick)="onSubmit()"
       />
     </div>
     <div class="mt-2">

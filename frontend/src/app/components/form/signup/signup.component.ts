@@ -14,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RouterModule } from '@angular/router';
 import { passwordMatchValidator } from '../../../shared/password-match.directive';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -30,17 +31,20 @@ import { passwordMatchValidator } from '../../../shared/password-match.directive
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
-  signupForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    confirmPassword: new FormControl('', [Validators.required]),
-    nickName: new FormControl('', [
-      Validators.required,
-      Validators.pattern(/^[A-Za-z]+$/),
-    ]),
-  },{
-    validators: passwordMatchValidator
-  });
+  signupForm = new FormGroup(
+    {
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required]),
+      nickname: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[A-Za-z]+$/),
+      ]),
+    },
+    {
+      validators: passwordMatchValidator,
+    }
+  );
 
   get username() {
     return this.signupForm.controls['username'];
@@ -50,13 +54,25 @@ export class SignupComponent {
     return this.signupForm.controls['password'];
   }
 
-  
   get confirmPassword() {
     return this.signupForm.controls['confirmPassword'];
   }
 
   get nickname() {
-    return this.signupForm.controls['nickName'];
+    return this.signupForm.controls['nickname'];
   }
-  
+
+  constructor(private authService: AuthService) {}
+  onSubmit() {
+    if (this.signupForm.valid) {
+      this.authService.signup(this.signupForm.value).subscribe({
+        next: (res) => {
+          console.log('Success:', res);
+        },
+        error: (err) => {
+          console.error('Error:', err);
+        },
+      });
+    }
+  }
 }
