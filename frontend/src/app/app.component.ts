@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
+import { CommonModule } from '@angular/common';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +24,8 @@ import { ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     RouterModule,
     ToastModule,
+    CommonModule,
+    TagModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

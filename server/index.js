@@ -2,11 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 dotenv.config();
 
 const app = express();
 
 // Middleware
+app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:4200", credentials: true }));
 app.use(express.json());
 
@@ -26,3 +28,7 @@ mongoose
     });
   })
   .catch((err) => console.error(err));
+
+app.use((req, res) => {
+  res.status(404).json({ message: "Not found" });
+});

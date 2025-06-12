@@ -34,10 +34,10 @@ import { Router } from '@angular/router';
 export class SignupComponent {
   signupForm = new FormGroup(
     {
-      username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required]),
-      nickname: new FormControl('', [
+      username: new FormControl<string>('', [Validators.required]),
+      password: new FormControl<string>('', [Validators.required]),
+      confirmPassword: new FormControl<string>('', [Validators.required]),
+      nickname: new FormControl<string>('', [
         Validators.required,
         Validators.pattern(/^[A-Za-z]+$/),
       ]),

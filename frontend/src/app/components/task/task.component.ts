@@ -1,0 +1,48 @@
+import { Component, OnInit } from '@angular/core';
+import { TaskService } from '../../services/task.service';
+import { Task } from './task.model';
+import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
+
+@Component({
+  selector: 'app-task',
+  imports: [CommonModule, CardModule, ButtonModule, TagModule],
+  templateUrl: './task.component.html',
+  styleUrl: './task.component.css',
+})
+export class TaskComponent implements OnInit {
+  tasks: Task[] = [];
+
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit() {
+    this.fetchTasks();
+  }
+
+  fetchTasks() {
+    this.taskService.getTasks().subscribe({
+      next: (res) => (this.tasks = res),
+      error: (err) => console.error('Failed to fetch tasks', err),
+    });
+  }
+
+  isOverdue(task: Task): boolean {
+    if (!task.deadline) return false;
+    return new Date(task.deadline) < new Date() && !task.completed;
+  }
+
+  markComplete(task: Task) {
+    // Your logic to mark the task complete, e.g. call backend and update UI
+    task.completed = true;
+  }
+
+  editTask(task: Task) {
+    // Logic to open edit modal/form
+  }
+
+  deleteTask(task: Task) {
+    // Logic to delete task after confirmation
+  }
+}

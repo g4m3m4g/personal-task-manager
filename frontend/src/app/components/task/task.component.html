@@ -1,0 +1,54 @@
+<div class="task-container">
+  <p-card
+    *ngFor="let task of tasks"
+    [ngClass]="{ completed: task.completed, overdue: isOverdue(task) }"
+    styleClass="task-card"
+  >
+    <ng-template pTemplate="header">
+      <div class="task-header">
+        <h3>{{ task.title }}</h3>
+        <p-tag
+          [severity]="
+            task.completed ? 'success' : isOverdue(task) ? 'danger' : 'warning'
+          "
+          [value]="
+            task.completed
+              ? 'Completed'
+              : isOverdue(task)
+              ? 'Overdue'
+              : 'Pending'
+          "
+        ></p-tag>
+      </div>
+    </ng-template>
+
+    <p>{{ task.description || "No description" }}</p>
+
+    <ng-template pTemplate="footer">
+      <div class="task-footer">
+        <small>Due: {{ task.deadline | date : "shortDate" }}</small>
+        <div class="task-actions">
+          <button
+            pButton
+            icon="pi pi-check"
+            class="p-button-success"
+            (click)="markComplete(task)"
+            [disabled]="task.completed"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-pencil"
+            class="p-button-warning"
+            (click)="editTask(task)"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-danger"
+            (click)="deleteTask(task)"
+          ></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

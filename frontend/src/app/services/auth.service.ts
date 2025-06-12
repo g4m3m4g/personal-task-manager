@@ -11,6 +11,8 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/auth/signup`, data);
   }
   login(data: { username: string; password: string }) {
-    return this.http.post(`${this.baseUrl}/auth/login`, data);
+    return this.http.post(`${this.baseUrl}/auth/login`, data, {
+      withCredentials: true,
+    });
   }
 }
