@@ -14,6 +14,8 @@ import { ButtonModule } from 'primeng/button';
 
 import { PasswordModule } from 'primeng/password';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -32,14 +34,27 @@ import { RouterModule } from '@angular/router';
 })
 export class LoginComponent {
   loginForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    username: new FormControl<string>('', [Validators.required]),
+    password: new FormControl<string>('', [Validators.required]),
   });
 
-  get username() {
-    return this.loginForm.controls['username'];
-  }
-  get password() {
-    return this.loginForm.controls['password'];
+  constructor(private authService: AuthService, private router: Router) {}
+  onLogin() {
+    if (this.loginForm.valid) {
+      const password: string = this.loginForm.value.password ?? '';
+      const username: string = this.loginForm.value.username ?? '';
+
+      this.authService.login({ username, password }).subscribe({
+        next: (res: any) => {
+          console.log('Login success:', res);
+          // save user info or token
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error('Login error:', err);
+          alert('Invalid credentials');
+        },
+      });
+    }
   }
 }

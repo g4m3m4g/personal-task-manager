@@ -1,4 +1,4 @@
-<form action="">
+<form action="" [formGroup]="loginForm" (ngSubmit)="onLogin()">
   <p-card header="" [style]="{ width: '390px', 'background-color': '#f9f9f9' }">
     <div class="field" [formGroup]="loginForm">
       <label for="username">Username</label>

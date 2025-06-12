@@ -10,4 +10,7 @@ export class AuthService {
   signup(data: any) {
     return this.http.post(`${this.baseUrl}/auth/signup`, data);
   }
+  login(data: { username: string; password: string }) {
+    return this.http.post(`${this.baseUrl}/auth/login`, data);
+  }
 }
