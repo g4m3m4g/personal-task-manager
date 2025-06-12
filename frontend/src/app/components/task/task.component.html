@@ -1,12 +1,28 @@
 <div class="task-container">
-  <p-card
+  <p-panel
     *ngFor="let task of tasks"
-    [ngClass]="{ completed: task.completed, overdue: isOverdue(task) }"
-    styleClass="task-card"
+    [toggleable]="true"
+    [collapsed]="true"
+    [ngClass]="{
+      completed: task.completed,
+      overdue: isOverdue(task)
+    }"
+    class="task-panel modern-shadow border-round surface-card"
+    [header]="''"
   >
     <ng-template pTemplate="header">
-      <div class="task-header">
-        <h3>{{ task.title }}</h3>
+      <div class="flex  justify-between items-center w-full">
+        <div class="text-lg mr-2 font-medium">
+          {{ task.title }}
+        </div>
+        <div class="text-sm text-gray-500 text-right">
+          Due: {{ task.duedate | date : "mediumDate" }}
+        </div>
+      </div>
+    </ng-template>
+
+    <div class="task-body text-sm text-gray-700">
+      <div class="flex items-center gap mb-2">
         <p-tag
           [severity]="
             task.completed ? 'success' : isOverdue(task) ? 'danger' : 'warning'
@@ -20,35 +36,33 @@
           "
         ></p-tag>
       </div>
-    </ng-template>
 
-    <p>{{ task.description || "No description" }}</p>
-
-    <ng-template pTemplate="footer">
-      <div class="task-footer">
-        <small>Due: {{ task.deadline | date : "shortDate" }}</small>
-        <div class="task-actions">
-          <button
-            pButton
-            icon="pi pi-check"
-            class="p-button-success"
-            (click)="markComplete(task)"
-            [disabled]="task.completed"
-          ></button>
-          <button
-            pButton
-            icon="pi pi-pencil"
-            class="p-button-warning"
-            (click)="editTask(task)"
-          ></button>
-          <button
-            pButton
-            icon="pi pi-trash"
-            class="p-button-danger"
-            (click)="deleteTask(task)"
-          ></button>
-        </div>
+      <div class="mb-3">
+        <p class="mb-1 font-semibold">Description</p>
+        <p>{{ task.description || "No description." }}</p>
       </div>
-    </ng-template>
-  </p-card>
+
+      <div class="task-actions flex gap-2 mt-3">
+        <button
+          pButton
+          icon="pi pi-check"
+          class="p-button-sm p-button-success p-button-outlined"
+          (click)="markComplete(task)"
+          [disabled]="task.completed"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-pencil"
+          class="p-button-sm p-button-warning p-button-outlined"
+          (click)="editTask(task)"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class="p-button-sm p-button-danger p-button-outlined"
+          (click)="deleteTask(task)"
+        ></button>
+      </div>
+    </div>
+  </p-panel>
 </div>

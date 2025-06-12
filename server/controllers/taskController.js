@@ -13,8 +13,8 @@ exports.getTasks = async (req, res) => {
 // @desc Create new task
 exports.createTask = async (req, res) => {
   try {
-    const { title, deadline } = req.body;
-    const task = new Task({ title, deadline });
+    const { title, description, duedate } = req.body;
+    const task = new Task({ title, description, duedate });
     await task.save();
     res.status(201).json(task);
   } catch (err) {
@@ -25,10 +25,10 @@ exports.createTask = async (req, res) => {
 // @desc Update task
 exports.updateTask = async (req, res) => {
   try {
-    const { title, deadline, completed } = req.body;
+    const { title, duedate, completed } = req.body;
     const task = await Task.findByIdAndUpdate(
       req.params.id,
-      { title, deadline, completed },
+      {  title, duedate, completed },
       { new: true }
     );
     if (!task) return res.status(404).json({ message: 'Task not found' });

@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'app-task',
-  imports: [CommonModule, CardModule, ButtonModule, TagModule],
+  imports: [CommonModule, CardModule, ButtonModule, TagModule, PanelModule],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
@@ -29,8 +30,8 @@ export class TaskComponent implements OnInit {
   }
 
   isOverdue(task: Task): boolean {
-    if (!task.deadline) return false;
-    return new Date(task.deadline) < new Date() && !task.completed;
+    if (!task.duedate) return false;
+    return new Date(task.duedate) < new Date() && !task.completed;
   }
 
   markComplete(task: Task) {
