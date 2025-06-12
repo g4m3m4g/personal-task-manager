@@ -16,6 +16,7 @@ import { PasswordModule } from 'primeng/password';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,11 @@ export class LoginComponent {
     password: new FormControl<string>('', [Validators.required]),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
   onLogin() {
     if (this.loginForm.valid) {
       const password: string = this.loginForm.value.password ?? '';
@@ -52,7 +57,11 @@ export class LoginComponent {
         },
         error: (err) => {
           console.error('Login error:', err);
-          alert('Invalid credentials');
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Login Failed',
+            detail: 'Invalid username or password',
+          });
         },
       });
     }

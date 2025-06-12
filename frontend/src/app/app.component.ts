@@ -7,6 +7,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     InputTextModule,
     ReactiveFormsModule,
     RouterModule,
+    ToastModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
