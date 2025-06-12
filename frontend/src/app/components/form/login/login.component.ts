@@ -44,6 +44,7 @@ export class LoginComponent {
     private router: Router,
     private messageService: MessageService
   ) {}
+
   onLogin() {
     if (this.loginForm.valid) {
       const password: string = this.loginForm.value.password ?? '';
@@ -53,6 +54,7 @@ export class LoginComponent {
         next: (res: any) => {
           console.log('Login success:', res);
           // save user info or token
+          this.authService.loginSuccess();
           this.router.navigate(['/home']);
         },
         error: (err) => {

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterModule } from '@angular/router';
-import { ButtonComponent } from './components/button/button.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -10,13 +9,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
 import { TagModule } from 'primeng/tag';
+import { SidebarModule } from 'primeng/sidebar';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
     ButtonModule,
-    ButtonComponent,
     CardModule,
     FloatLabelModule,
     FormsModule,
@@ -26,6 +26,8 @@ import { TagModule } from 'primeng/tag';
     ToastModule,
     CommonModule,
     TagModule,
+    SidebarModule,
+    NavbarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

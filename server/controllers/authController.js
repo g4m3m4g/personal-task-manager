@@ -1,5 +1,9 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config();
+let secureStatus = process.env.NODE_ENV === "production";
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -39,12 +43,26 @@ exports.login = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "Strict", 
+        secure: secureStatus,
+        sameSite: "Strict",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
       })
       .json({ user: { username, nickname: user.nickname } });
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.logout = (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: secureStatus,
+      sameSite: "Strict",
+      path: "/",
+    });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
     res.status(500).json({ error: err.message });
   }
 };
