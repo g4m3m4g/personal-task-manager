@@ -1,3 +1,5 @@
+<p-confirmDialog></p-confirmDialog>
+
 <div class="task-container">
   <p-panel
     *ngFor="let task of tasks"
@@ -62,7 +64,6 @@
           class="p-button-sm p-button-danger p-button-outlined"
           (click)="deleteTask(task)"
         ></button>
-        <p-confirmDialog></p-confirmDialog>
       </div>
     </div>
   </p-panel>
