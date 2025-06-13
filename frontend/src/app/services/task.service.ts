@@ -23,5 +23,9 @@ export class TaskService {
     });
   }
 
-
+  deleteTask(taskId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/tasks/${taskId}`, {
+      withCredentials: true,
+    });
+  }
 }

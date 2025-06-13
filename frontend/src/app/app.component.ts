@@ -13,6 +13,8 @@ import { SidebarModule } from 'primeng/sidebar';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddTaskButtonComponent } from './components/button/add-task-button/add-task-button.component';
 import { AuthService } from './services/auth.service';
+
+
 @Component({
   selector: 'app-root',
   imports: [
@@ -30,6 +32,7 @@ import { AuthService } from './services/auth.service';
     SidebarModule,
     NavbarComponent,
     AddTaskButtonComponent,
+
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

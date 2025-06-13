@@ -6,10 +6,19 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { PanelModule } from 'primeng/panel';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-task',
-  imports: [CommonModule, CardModule, ButtonModule, TagModule, PanelModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    TagModule,
+    PanelModule,
+    ConfirmDialogModule,
+  ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
@@ -44,6 +53,13 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTask(task: Task) {
-    // Logic to delete task after confirmation
+    this.taskService.deleteTask(task._id).subscribe({
+      next: () => {
+        this.tasks = this.tasks.filter((t) => t._id !== task._id);
+      },
+      error: (err) => {
+        console.error('Failed to delete task', err);
+      },
+    });
   }
 }
