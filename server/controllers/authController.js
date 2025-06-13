@@ -46,6 +46,7 @@ exports.login = async (req, res) => {
         secure: !secureStatus,
         sameSite: "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
+        path: "/",
       })
       .json({ user: { username, nickname: user.nickname }, token: token });
   } catch (err) {

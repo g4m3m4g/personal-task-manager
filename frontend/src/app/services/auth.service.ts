@@ -35,6 +35,7 @@ export class AuthService {
   // Logout and reset auth signal
   logout() {
     this.tokenSignal.set(false);
+
     return this.http
       .post(
         `${this.baseUrl}/auth/logout`,
@@ -43,6 +44,7 @@ export class AuthService {
           withCredentials: true,
         }
       )
+      .subscribe();
   }
 
   // Manually mark login success (used after successful login)
@@ -62,6 +64,6 @@ export class AuthService {
       .subscribe({
         next: (res) => this.tokenSignal.set(true),
         error: () => this.tokenSignal.set(false),
-      });
+      })
   }
 }
