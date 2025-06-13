@@ -1,4 +1,6 @@
-<nav class="w-full shadow-sm px-6 py-3 flex justify-between items-center bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+<nav
+  class="w-full shadow-sm px-6 py-3 flex justify-between items-center bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+>
   <!-- Logo -->
   <div class="text-xl font-bold tracking-wide">
     <a routerLink="/">TaskItUp</a>
@@ -6,27 +8,50 @@
 
   <!-- Desktop Menu -->
   @if (isLoggedIn) {
-    <ul class="hidden md:flex space-x-6 text-sm font-medium">
-      <li><a routerLink="/home" routerLinkActive="text-blue-500" class="hover:text-blue-500 transition">My Tasks</a></li>
-      <li><a routerLink="/profile" routerLinkActive="text-blue-500" class="hover:text-blue-500 transition">Profile</a></li>
-    </ul>
+  <ul class="hidden md:flex space-x-6 text-sm font-medium">
+    <li>
+      <a
+        routerLink="/home"
+        routerLinkActive="text-blue-500"
+        class="hover:text-blue-500 transition"
+        >My Tasks</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/profile"
+        routerLinkActive="text-blue-500"
+        class="hover:text-blue-500 transition"
+        >Profile</a
+      >
+    </li>
+  </ul>
   }
 
   <!-- Right Side -->
   <div class="flex items-center gap-3">
     @if (isLoggedIn) {
-      <button
-        pButton
-        icon="pi pi-sign-out"
-        class="p-button-text text-sm"
-        (click)="logout()"
-        label="Logout"
-      ></button>
+    <button
+      pButton
+      icon="pi pi-sign-out"
+      (click)="logout()"
+      label="Logout"
+    ></button>
     } @else {
-      <div class="space-x-2">
-        <a routerLink="/login" pButton label="Login" class="p-button-sm p-button-outlined"></a>
-        <a routerLink="/signup" pButton label="Sign Up" class="p-button-sm p-button-primary"></a>
-      </div>
+    <div class="space-x-2">
+      <a
+        routerLink="/login"
+        pButton
+        label="Login"
+        class="p-button-md p-button-outlined"
+      ></a>
+      <a
+        routerLink="/signup"
+        pButton
+        label="Sign Up"
+        class="p-button-md p-button-primary"
+      ></a>
+    </div>
     }
 
     <!-- Mobile menu button -->
@@ -48,15 +73,29 @@
 >
   <ul class="space-y-4 text-base">
     @if (isLoggedIn) {
-      <li><a routerLink="/" class="block hover:text-blue-500">🏠 Home</a></li>
-      <li><a routerLink="/tasks" class="block hover:text-blue-500">📝 My Tasks</a></li>
-      <li><a routerLink="/profile" class="block hover:text-blue-500">👤 Profile</a></li>
-      <li class="pt-4 border-t dark:border-gray-700">
-        <button pButton label="Logout" icon="pi pi-sign-out" class="p-button-sm p-button-danger w-full" (click)="logout()"></button>
-      </li>
+    <li><a routerLink="/" class="block hover:text-blue-500">Home</a></li>
+    <li>
+      <a routerLink="/tasks" class="block hover:text-blue-500">My Tasks</a>
+    </li>
+    <li>
+      <a routerLink="/profile" class="block hover:text-blue-500">Profile</a>
+    </li>
+    <li class="pt-4 border-t dark:border-gray-700">
+      <button
+        pButton
+        label="Logout"
+        icon="pi pi-sign-out"
+        class="p-button-sm p-button-danger w-full"
+        (click)="logout()"
+      ></button>
+    </li>
     } @else {
-      <li><a routerLink="/login" class="block hover:text-blue-500">🔐 Login</a></li>
-      <li><a routerLink="/signup" class="block hover:text-blue-500">📝 Sign Up</a></li>
+    <li>
+      <a routerLink="/login" class="block hover:text-blue-500">🔐 Login</a>
+    </li>
+    <li>
+      <a routerLink="/signup" class="block hover:text-blue-500">📝 Sign Up</a>
+    </li>
     }
   </ul>
 </p-sidebar>

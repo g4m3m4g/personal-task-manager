@@ -73,7 +73,10 @@ export class SignupComponent {
     if (this.signupForm.valid) {
       this.authService.signup(this.signupForm.value).subscribe({
         next: (res) => {
-          console.log('Success:', res);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Signup Success',
+          });
           this.router.navigate(['/login']);
         },
         error: (err) => {

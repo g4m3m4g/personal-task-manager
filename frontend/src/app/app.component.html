@@ -1,9 +1,13 @@
-<nav>
-  <app-navbar></app-navbar>
-</nav>
-<div class="flex justify-content-center align-items-center h-full">
-  <main>
+<div class="min-h-screen flex flex-col">
+  <nav>
+    <app-navbar></app-navbar>
+  </nav>
+
+  <main class="flex-1 flex items-center justify-center p-4 relative bg-white">
     <p-toast pRipple position="bottom-right"></p-toast>
     <router-outlet></router-outlet>
+
+    <!-- Floating Add Button -->
+    <app-add-task-button *ngIf="isLoggedIn"></app-add-task-button>
   </main>
 </div>

@@ -1,0 +1,74 @@
+<!-- Floating Add Task Button -->
+<button
+  class="fixed bottom-6 right-6 bg-green-600 text-white rounded-full w-14 h-14 text-3xl shadow-xl hover:bg-green-700 transition duration-300"
+  (click)="openModal()"
+  aria-label="Add Task"
+>
+  +
+</button>
+
+<!-- Modal -->
+<p-dialog
+  [(visible)]="displayModal"
+  [modal]="true"
+  [closable]="true"
+  [dismissableMask]="true"
+  [style]="{ width: '120vw', maxWidth: '500px', height: '550px' }"
+  header="Add New Task"
+  [contentStyle]="{ padding: '1.5rem' }"
+>
+  <div class="space-y-4">
+    <!-- Title -->
+    <div>
+      <input
+        pInputText
+        [(ngModel)]="task.title"
+        type="text"
+        placeholder="Task Title"
+        class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+    </div>
+
+    <!-- Description -->
+    <div>
+      <textarea
+        pInputTextarea
+        [(ngModel)]="task.description"
+        rows="8"
+        placeholder="Task Description"
+        class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+        autoResize="true"
+        type="text"
+      ></textarea>
+    </div>
+
+    <!-- Due Date -->
+    <div>
+      <p-datepicker
+        [(ngModel)]="task.duedate"
+        dateFormat="dd-mm-yy"
+        showIcon="true"
+        inputStyleClass="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        placeholder="Due Date"
+      ></p-datepicker>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3 pt-4">
+      <button
+        pButton
+        label="Cancel"
+        class="p-button-text text-gray-600 hover:text-gray-900"
+        (click)="displayModal = false"
+      ></button>
+      <button
+        pButton
+        label="Add Task"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow"
+        (click)="submitTask()"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>

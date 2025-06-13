@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [SidebarModule, ButtonModule, RouterLink, CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'], // fix here (styleUrls plural)
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   visibleSidebar = false;

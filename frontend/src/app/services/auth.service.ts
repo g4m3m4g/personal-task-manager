@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private baseUrl = 'http://localhost:5000/api';
-  isLoggedIn = signal(this.checkToken());
+  private tokenSignal = signal(this.checkToken());
+  isLoggedIn = computed(() => this.tokenSignal());
 
   constructor(private http: HttpClient) {}
 
@@ -19,19 +20,23 @@ export class AuthService {
   }
 
   private checkToken(): boolean {
-    return document.cookie.includes('token=');
+    return document.cookie.includes('token');
   }
 
   loginSuccess() {
-    this.isLoggedIn.set(true);
+    this.tokenSignal.set(true); // update after successful login
   }
 
   logout() {
-    this.isLoggedIn.set(false);
+    this.tokenSignal.set(false); // update after logout
     return this.http.post(
       `${this.baseUrl}/auth/logout`,
       {},
       { withCredentials: true }
     );
+  }
+
+  refreshTokenState() {
+    this.tokenSignal.set(this.checkToken()); // call this on app start or reload
   }
 }

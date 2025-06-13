@@ -11,7 +11,8 @@ import { CommonModule } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { SidebarModule } from 'primeng/sidebar';
 import { NavbarComponent } from './components/navbar/navbar.component';
-
+import { AddTaskButtonComponent } from './components/button/add-task-button/add-task-button.component';
+import { AuthService } from './services/auth.service';
 @Component({
   selector: 'app-root',
   imports: [
@@ -28,10 +29,20 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     TagModule,
     SidebarModule,
     NavbarComponent,
+    AddTaskButtonComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'frontend';
+  constructor(public authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.refreshTokenState();
+  }
+
+  get isLoggedIn() {
+    return this.authService.isLoggedIn();
+  }
 }
