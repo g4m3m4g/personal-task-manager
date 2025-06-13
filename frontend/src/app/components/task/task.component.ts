@@ -19,13 +19,17 @@ import { ConfirmationService } from 'primeng/api';
     PanelModule,
     ConfirmDialogModule,
   ],
+  providers: [ConfirmationService],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
 export class TaskComponent implements OnInit {
   tasks: Task[] = [];
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit() {
     this.fetchTasks();
@@ -53,12 +57,19 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTask(task: Task) {
-    this.taskService.deleteTask(task._id).subscribe({
-      next: () => {
-        this.tasks = this.tasks.filter((t) => t._id !== task._id);
-      },
-      error: (err) => {
-        console.error('Failed to delete task', err);
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete "${task.title}"?`,
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.taskService.deleteTask(task._id).subscribe({
+          next: () => {
+            this.tasks = this.tasks.filter((t) => t._id !== task._id);
+          },
+          error: (err) => {
+            console.error('Failed to delete task', err);
+          },
+        });
       },
     });
   }

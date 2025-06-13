@@ -13,6 +13,8 @@ import { SidebarModule } from 'primeng/sidebar';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddTaskButtonComponent } from './components/button/add-task-button/add-task-button.component';
 import { AuthService } from './services/auth.service';
+import { ConfirmationService } from 'primeng/api';
+
 
 
 @Component({
