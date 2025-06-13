@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { passwordMatchValidator } from '../../../shared/password-match.directive';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-signup',
@@ -63,7 +64,11 @@ export class SignupComponent {
     return this.signupForm.controls['nickname'];
   }
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
   onSignup() {
     if (this.signupForm.valid) {
       this.authService.signup(this.signupForm.value).subscribe({
@@ -73,6 +78,11 @@ export class SignupComponent {
         },
         error: (err) => {
           console.error('Error:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Signup Failed',
+            detail: 'Username already exists',
+          });
         },
       });
     }
