@@ -23,6 +23,14 @@ export class TaskService {
     });
   }
 
+  markComplete(taskId: string): Observable<any> {
+    return this.http.patch<Task>(
+      `${this.baseUrl}/tasks/${taskId}/complete`,
+      { completed: true },
+      { withCredentials: true }
+    );
+  }
+
   deleteTask(taskId: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/tasks/${taskId}`, {
       withCredentials: true,

@@ -48,8 +48,12 @@ export class TaskComponent implements OnInit {
   }
 
   markComplete(task: Task) {
-    // Your logic to mark the task complete, e.g. call backend and update UI
-    task.completed = true;
+    this.taskService.markComplete(task._id).subscribe({
+      next: (updatedTask) => {
+        task.completed = updatedTask.completed;
+      },
+      error: (err) => console.error('Failed to mark task as complete', err),
+    });
   }
 
   editTask(task: Task) {
