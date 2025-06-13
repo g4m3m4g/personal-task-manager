@@ -14,8 +14,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddTaskButtonComponent } from './components/button/add-task-button/add-task-button.component';
 import { AuthService } from './services/auth.service';
 import { ConfirmationService } from 'primeng/api';
-
-
+import { LandingComponent } from './components/landing/landing.component';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +33,6 @@ import { ConfirmationService } from 'primeng/api';
     SidebarModule,
     NavbarComponent,
     AddTaskButtonComponent,
-
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
