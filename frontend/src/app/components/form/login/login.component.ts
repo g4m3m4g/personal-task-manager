@@ -52,8 +52,6 @@ export class LoginComponent {
 
       this.authService.login({ username, password }).subscribe({
         next: (res: any) => {
-          console.log('Login success:', res);
-          // save user info or token
           this.authService.loginSuccess();
           this.router.navigate(['/home']);
         },

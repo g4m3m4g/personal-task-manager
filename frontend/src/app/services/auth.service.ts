@@ -7,16 +7,20 @@ export class AuthService {
   private baseUrl = 'http://localhost:5000/api';
 
   // Signal to track login state reactively
-  private tokenSignal = signal(this.checkToken());
+  private tokenSignal = signal(false);
 
   // Reactive login status
   isLoggedIn = computed(() => this.tokenSignal());
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.refreshTokenState();
+  }
 
   // Signup method
   signup(data: any) {
-    return this.http.post(`${this.baseUrl}/auth/signup`, data);
+    return this.http.post(`${this.baseUrl}/auth/signup`, data, {
+      withCredentials: true,
+    });
   }
 
   // Login with credentials, and set signal if successful
@@ -25,21 +29,20 @@ export class AuthService {
       .post(`${this.baseUrl}/auth/login`, data, {
         withCredentials: true,
       })
-      .pipe(
-        tap(() => this.loginSuccess()) // mark login success if response succeeds
-      );
+      .pipe(tap(() => this.loginSuccess()));
   }
 
   // Logout and reset auth signal
   logout() {
     this.tokenSignal.set(false);
-    return this.http.post(
-      `${this.baseUrl}/auth/logout`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http
+      .post(
+        `${this.baseUrl}/auth/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
   }
 
   // Manually mark login success (used after successful login)
@@ -54,6 +57,11 @@ export class AuthService {
 
   // Refresh signal (e.g. on page reload)
   refreshTokenState() {
-    this.tokenSignal.set(this.checkToken());
+    this.http
+      .get(`${this.baseUrl}/auth/me`, { withCredentials: true })
+      .subscribe({
+        next: (res) => this.tokenSignal.set(true),
+        error: () => this.tokenSignal.set(false),
+      });
   }
 }

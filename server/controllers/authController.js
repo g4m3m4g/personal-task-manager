@@ -43,11 +43,11 @@ exports.login = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: secureStatus,
-        sameSite: "Strict",
+        secure: !secureStatus,
+        sameSite: "Lax",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
       })
-      .json({ user: { username, nickname: user.nickname } });
+      .json({ user: { username, nickname: user.nickname }, token: token });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -57,12 +57,16 @@ exports.logout = (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: secureStatus,
-      sameSite: "Strict",
+      secure: !secureStatus,
+      sameSite: "Lax",
       path: "/",
     });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ error: err.message });
   }
+};
+
+exports.me = (req, res) => {
+  res.json({ user: req.user });
 };
