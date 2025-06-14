@@ -101,7 +101,7 @@ export class TaskComponent implements OnInit {
   saveTask() {
     if (!(this.selectedTask.title.trim())) {
       this.messageService.add({
-        severity: 'error',
+        severity: 'warn',
         summary: 'Update task failed',
         detail: 'Please input task title',
       });

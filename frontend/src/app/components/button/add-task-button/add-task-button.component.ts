@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../../services/task.service';
 import { Task } from '../../task/task.model';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-task-button',
@@ -33,7 +34,8 @@ export class AddTaskButtonComponent {
 
   constructor(
     private taskService: TaskService,
-    public authService: AuthService
+    public authService: AuthService,
+    private messageService: MessageService
   ) {}
 
   openModal() {
@@ -41,6 +43,15 @@ export class AddTaskButtonComponent {
   }
 
   submitTask() {
+    if (!this.task.title.trim()) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Create task failed',
+        detail: 'Please input task title',
+      });
+      return;
+    }
+
     this.taskService.createTask(this.task).subscribe({
       next: (newTask) => {
         console.log('Task created:', newTask);
