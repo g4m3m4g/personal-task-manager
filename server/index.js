@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const requestLogger  = require("./middleware/loggerMiddleware");
+
 dotenv.config();
 
 const app = express();
@@ -11,6 +13,7 @@ const app = express();
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:4200", credentials: true }));
 app.use(express.json());
+app.use(requestLogger);
 
 // Routes
 const taskRoutes = require("./routes/tasks");
