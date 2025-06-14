@@ -71,7 +71,8 @@
     [collapsed]="true"
     [ngClass]="{
       completed: task.completed,
-      overdue: isOverdue(task)
+      overdue: isOverdue(task),
+      duesoon: isDueSoon(task)
     }"
     class="task-panel modern-shadow border-round surface-card"
     [header]="''"
@@ -91,13 +92,21 @@
       <div class="flex items-center gap mb-2">
         <p-tag
           [severity]="
-            task.completed ? 'success' : isOverdue(task) ? 'danger' : 'info'
+            task.completed
+              ? 'success'
+              : isOverdue(task)
+              ? 'danger'
+              : isDueSoon(task)
+              ? 'warn'
+              : 'info'
           "
           [value]="
             task.completed
               ? 'Completed'
               : isOverdue(task)
-              ? 'Overdue'
+              ? 'Overdue!'
+              : isDueSoon(task)
+              ? 'Due soon'
               : 'Pending'
           "
         ></p-tag>
@@ -121,7 +130,7 @@
           *ngIf="task.completed"
           pButton
           icon="pi pi-times"
-          class="p-button-sm p-button-warning  p-button-outlined"
+          class="p-button-sm p-button-warn p-button-outlined"
           (click)="markNotComplete(task)"
           [disabled]="!task.completed"
         ></button>

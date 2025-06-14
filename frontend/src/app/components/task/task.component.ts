@@ -57,8 +57,19 @@ export class TaskComponent implements OnInit {
   }
 
   isOverdue(task: Task): boolean {
-    if (!task.duedate) return false;
-    return new Date(task.duedate) < new Date() && !task.completed;
+    if (!task.duedate || task.completed) return false;
+    return new Date(task.duedate) < new Date();
+  }
+
+  isDueSoon(task: Task): boolean {
+    if (!task.duedate || task.completed) return false;
+
+    const now = new Date();
+    const dueDate = new Date(task.duedate);
+    // Calculate the time difference in milliseconds (3 days = 259200000 ms)
+    const timeDiff = dueDate.getTime() - now.getTime();
+
+    return timeDiff > 0 && timeDiff <= 3 * 24 * 60 * 60 * 1000;
   }
 
   markComplete(task: Task) {
@@ -70,12 +81,13 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  markNotComplete(task: Task){
+  markNotComplete(task: Task) {
     this.taskService.markNotComplete(task._id).subscribe({
-      next: (updatedTask) => {        
+      next: (updatedTask) => {
         task.completed = updatedTask.completed;
-      }, error: (err) => console.error('Failed to mark task as not complete', err)
-    })
+      },
+      error: (err) => console.error('Failed to mark task as not complete', err),
+    });
   }
 
   editTask(task: Task) {
