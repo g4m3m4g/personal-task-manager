@@ -12,6 +12,7 @@
     </div>
     <div class="field" [formGroup]="signupForm">
       <label for="password">Password</label>
+      <br />
       <p-password
         formControlName="password"
         class="w-full"
@@ -25,6 +26,7 @@
         class="w-full"
         [feedback]="false"
       />
+      <br />
       @if (signupForm.errors?.['passwordMismatch'] && signupForm.touched) {
       <small style="color: brown">Passwords do not match</small>
       }

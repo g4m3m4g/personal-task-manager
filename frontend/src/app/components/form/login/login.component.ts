@@ -17,6 +17,8 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { environment } from '../../../../environments/environment.prod';
+
 
 @Component({
   selector: 'app-login',
@@ -38,6 +40,17 @@ export class LoginComponent {
     username: new FormControl<string>('', [Validators.required]),
     password: new FormControl<string>('', [Validators.required]),
   });
+  siteKey = environment.turnstileSiteKey;
+  ngOnInit() {
+    // Register the callback globally
+    (window as any).onTurnstileSuccess = this.onTurnstileSuccess.bind(this);
+  }
+
+  isCaptchaVerified = false;
+  onTurnstileSuccess(token: string) {
+    this.isCaptchaVerified = !!token;
+    // Optionally, send `token` to  backend for verification
+  }
 
   constructor(
     private authService: AuthService,

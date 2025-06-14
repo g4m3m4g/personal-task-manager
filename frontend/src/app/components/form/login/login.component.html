@@ -12,6 +12,7 @@
     </div>
     <div class="field" [formGroup]="loginForm">
       <label for="password">Password</label>
+      <br />
       <p-password
         formControlName="password"
         class="w-full"
@@ -19,6 +20,11 @@
         [toggleMask]="true"
       />
     </div>
+    <div
+      class="cf-turnstile"
+      [attr.data-sitekey]="siteKey"
+      data-callback="onTurnstileSuccess"
+    ></div>
     <div>
       <p-button
         type="submit"
@@ -26,7 +32,7 @@
         styleClass="w-full"
         severity="contrast"
         class="w-full"
-        [disabled]="loginForm.invalid"
+        [disabled]="loginForm.invalid || !isCaptchaVerified"
       />
     </div>
     <div class="mt-2">
