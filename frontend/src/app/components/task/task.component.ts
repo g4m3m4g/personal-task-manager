@@ -11,6 +11,7 @@ import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-task',
@@ -42,7 +43,8 @@ export class TaskComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -66,10 +68,11 @@ export class TaskComponent implements OnInit {
 
     const now = new Date();
     const dueDate = new Date(task.duedate);
-    // Calculate the time difference in milliseconds (3 days = 259200000 ms)
+    // Calculate the time difference in milliseconds (2 days)
     const timeDiff = dueDate.getTime() - now.getTime();
+    const twoDay = 2 * 24 * 60 * 60 * 1000;
 
-    return timeDiff > 0 && timeDiff <= 3 * 24 * 60 * 60 * 1000;
+    return timeDiff > 0 && timeDiff <= twoDay;
   }
 
   markComplete(task: Task) {
@@ -96,6 +99,15 @@ export class TaskComponent implements OnInit {
   }
 
   saveTask() {
+    if (!(this.selectedTask.title.trim())) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Update task failed',
+        detail: 'Please input task title',
+      });
+      return;
+    }
+
     this.taskService
       .updateTask(this.selectedTask._id, this.selectedTask)
       .subscribe({
