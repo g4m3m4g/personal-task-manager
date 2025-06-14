@@ -23,6 +23,12 @@ export class TaskService {
     });
   }
 
+  updateTask(taskId: string, updatedData: Partial<Task>): Observable<Task> {
+    return this.http.put<Task>(`${this.baseUrl}/tasks/${taskId}`, updatedData, {
+      withCredentials: true,
+    });
+  }
+
   markComplete(taskId: string): Observable<any> {
     return this.http.patch<Task>(
       `${this.baseUrl}/tasks/${taskId}/complete`,

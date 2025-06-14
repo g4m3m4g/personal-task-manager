@@ -8,6 +8,9 @@ import { TagModule } from 'primeng/tag';
 import { PanelModule } from 'primeng/panel';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { FormsModule } from '@angular/forms';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-task',
@@ -18,6 +21,9 @@ import { ConfirmationService } from 'primeng/api';
     TagModule,
     PanelModule,
     ConfirmDialogModule,
+    DialogModule,
+    FormsModule,
+    DatePickerModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './task.component.html',
@@ -25,6 +31,14 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class TaskComponent implements OnInit {
   tasks: Task[] = [];
+  editDialogVisible: boolean = false;
+  selectedTask: Task = {
+    _id: '',
+    title: '',
+    description: '',
+    duedate: undefined,
+    completed: false,
+  };
 
   constructor(
     private taskService: TaskService,
@@ -57,7 +71,20 @@ export class TaskComponent implements OnInit {
   }
 
   editTask(task: Task) {
-    // Logic to open edit modal/form
+    this.selectedTask = { ...task };
+    this.editDialogVisible = true;
+  }
+
+  saveTask() {
+    this.taskService
+      .updateTask(this.selectedTask._id, this.selectedTask)
+      .subscribe({
+        next: () => {
+          this.fetchTasks();
+          this.editDialogVisible = false;
+        },
+        error: (err) => console.error('Failed to update task', err),
+      });
   }
 
   deleteTask(task: Task) {

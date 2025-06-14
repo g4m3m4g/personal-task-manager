@@ -1,4 +1,68 @@
 <p-confirmDialog></p-confirmDialog>
+<p-dialog
+  header="Edit Task"
+  [(visible)]="editDialogVisible"
+  [modal]="true"
+  [closable]="true"
+  [dismissableMask]="true"
+  [style]="{ width: '420px' }"
+>
+  <div class="space-y-5 text-gray-700">
+    <div>
+      <label for="title" class="block text-sm font-medium mb-1">Title</label>
+      <input
+        id="title"
+        type="text"
+        pInputText
+        [(ngModel)]="selectedTask.title"
+        class="w-full px-3 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none transition"
+      />
+    </div>
+
+    <div>
+      <label for="description" class="block text-sm font-medium mb-1"
+        >Description</label
+      >
+      <textarea
+        id="description"
+        rows="6"
+        pInputTextarea
+        [(ngModel)]="selectedTask.description"
+        class="w-full px-3 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none transition resize-none"
+      ></textarea>
+    </div>
+
+    <div>
+      <label for="duedate" class="block text-sm font-medium mb-1"
+        >Due Date</label
+      >
+      <p-datepicker
+        [(ngModel)]="selectedTask.duedate"
+        dateFormat="dd-mm-yy"
+        showIcon="true"
+        inputStyleClass="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        placeholder="Due Date"
+      ></p-datepicker>
+    </div>
+
+    <div class="flex justify-end gap-2 pt-2">
+      <button
+        pButton
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text text-sm px-4 py-2"
+        (click)="editDialogVisible = false"
+      ></button>
+      <button
+        pButton
+        label="Save"
+        icon="pi pi-check"
+        class="text-sm px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
+        (click)="saveTask()"
+      ></button>
+    </div>
+  </div>
+</p-dialog>
 
 <div class="task-container">
   <p-panel
@@ -27,7 +91,7 @@
       <div class="flex items-center gap mb-2">
         <p-tag
           [severity]="
-            task.completed ? 'success' : isOverdue(task) ? 'danger' : 'warning'
+            task.completed ? 'success' : isOverdue(task) ? 'danger' : 'warning' 
           "
           [value]="
             task.completed
