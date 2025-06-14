@@ -70,6 +70,14 @@ export class TaskComponent implements OnInit {
     });
   }
 
+  markNotComplete(task: Task){
+    this.taskService.markNotComplete(task._id).subscribe({
+      next: (updatedTask) => {        
+        task.completed = updatedTask.completed;
+      }, error: (err) => console.error('Failed to mark task as not complete', err)
+    })
+  }
+
   editTask(task: Task) {
     this.selectedTask = { ...task };
     this.editDialogVisible = true;

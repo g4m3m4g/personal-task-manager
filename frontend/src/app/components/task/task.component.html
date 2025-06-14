@@ -91,7 +91,7 @@
       <div class="flex items-center gap mb-2">
         <p-tag
           [severity]="
-            task.completed ? 'success' : isOverdue(task) ? 'danger' : 'warning' 
+            task.completed ? 'success' : isOverdue(task) ? 'danger' : 'info'
           "
           [value]="
             task.completed
@@ -110,12 +110,22 @@
 
       <div class="task-actions flex gap-2 mt-3">
         <button
+          *ngIf="!task.completed"
           pButton
           icon="pi pi-check"
           class="p-button-sm p-button-success p-button-outlined"
           (click)="markComplete(task)"
           [disabled]="task.completed"
         ></button>
+        <button
+          *ngIf="task.completed"
+          pButton
+          icon="pi pi-times"
+          class="p-button-sm p-button-warning  p-button-outlined"
+          (click)="markNotComplete(task)"
+          [disabled]="!task.completed"
+        ></button>
+
         <button
           pButton
           icon="pi pi-pencil"

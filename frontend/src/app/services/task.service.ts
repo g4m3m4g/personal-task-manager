@@ -37,6 +37,14 @@ export class TaskService {
     );
   }
 
+  markNotComplete(taskId: string): Observable<any> {
+    return this.http.patch<Task>(
+      `${this.baseUrl}/tasks/${taskId}/not-complete`,
+      { completed: false },
+      { withCredentials: true }
+    );
+  }
+
   deleteTask(taskId: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/tasks/${taskId}`, {
       withCredentials: true,

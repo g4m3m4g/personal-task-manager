@@ -25,8 +25,6 @@ exports.createTask = async (req, res) => {
 // @desc Update task
 exports.updateTask = async (req, res) => {
   try {
-    console.log("beckend", req.params.id);
-
     const { title, description, duedate, completed } = req.body;
     const task = await Task.findByIdAndUpdate(
       req.params.id,
@@ -57,6 +55,21 @@ exports.markComplete = async (req, res) => {
     const task = await Task.findByIdAndUpdate(
       req.params.id,
       { completed: true },
+      { new: true }
+    );
+    if (!task) return res.status(404).json({ message: "Task not found" });
+    res.json(task);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// @desc Mark task as complete
+exports.markNotComplete = async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(
+      req.params.id,
+      { completed: false },
       { new: true }
     );
     if (!task) return res.status(404).json({ message: "Task not found" });
