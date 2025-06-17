@@ -43,14 +43,16 @@ export class LoginComponent {
   siteKey = environment.turnstileSiteKey;
   ngOnInit() {
     // Register the callback globally
-    (window as any).onTurnstileSuccess = this.onTurnstileSuccess.bind(this);
+    //(window as any).onTurnstileSuccess = this.onTurnstileSuccess.bind(this);
   }
 
+  /*
   isCaptchaVerified = false;
   onTurnstileSuccess(token: string) {
     this.isCaptchaVerified = !!token;
     // Optionally, send `token` to  backend for verification
   }
+    */
 
   constructor(
     private authService: AuthService,
